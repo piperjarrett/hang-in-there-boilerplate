@@ -2,7 +2,16 @@
 var picture = document.querySelector(".poster-img");
 var title = document.querySelector(".poster-title");
 var quote = document.querySelector(".poster-quote");
-var buttonOne = document.querySelector(".show-random");
+var showRandomButton = document.querySelector(".show-random");
+var showSavedButton = document.querySelector(".show-saved")
+var showFormButton = document.querySelector(".show-form")
+var savePosterButton = document.querySelector(".save-poster")
+var mainPage = document.querySelector(".main-poster")
+var formPage = document.querySelector(".poster-form")
+var savedPage = document.querySelector(".saved-posters")
+var nevermindButton = document.querySelector(".show-main")
+var backToMain = document.querySelector(".back-to-main")
+
 // we've provided you with some data to work with 👇
 var images = [
   "./assets/bees.jpg",
@@ -105,18 +114,37 @@ var savedPosters = [];
 var currentPoster = new Poster();
 // console.log(button);
 // event listeners go here 👇
-window.addEventListener("load", displayPoster());
-buttonOne.addEventListener("click", () => displayPoster());
+
+window.addEventListener("load", displayPoster);
+showRandomButton.addEventListener("click", displayPoster);
+showSavedButton.addEventListener("click", displaySaved)
+showFormButton.addEventListener("click",  displayForm)
+nevermindButton.addEventListener("click", returnHome)
+backToMain.addEventListener("click", returnHome)
+// savePosterButton.addEventListener("click", //savePoster)
+
 // functions and event handlers go here 👇
-//function randomImage() {
-//  picture.src = images[getRandomIndex(images)];
+
 function displayPoster() {
   picture.src = images[getRandomIndex(images)];
   title.innerText = titles[getRandomIndex(titles)];
   quote.innerText = quotes[getRandomIndex(quotes)];
 }
+function displayForm() {
+  mainPage.classList.add("hidden")
+  formPage.classList.remove("hidden")
+}
+function displaySaved() {
+  mainPage.classList.add("hidden")
+  savedPage.classList.remove("hidden")
+}
+function returnHome() {
+  mainPage.classList.remove("hidden")
+  formPage.classList.add("hidden")
+}
 
-console.log(picture);
+
+
 
 // (we've provided one for you to get you started)!
 function getRandomIndex(array) {
