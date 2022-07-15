@@ -125,7 +125,8 @@ showFormButton.addEventListener("click", displayForm);
 nevermindButton.addEventListener("click", returnHome);
 backToMain.addEventListener("click", returnHome);
 showPosterButton.addEventListener("click", makePoster);
-
+savePosterButton.addEventListener("click", savePoster);
+showSavedButton.addEventListener("click", showSavedGrid);
 // savePosterButton.addEventListener("click", //savePoster)
 
 // functions and event handlers go here 👇
@@ -160,18 +161,21 @@ function makePoster() {
   console.log(currentPoster);
   return currentPoster;
 }
+function savePoster() {
+  for (var i = 0; i < savedPosters.length; i++) {
+    if (currentPoster !== savedPosters[i]) savedPosters.push(currentPoster);
+    console.log(savedPosters);
+  }
+}
 
-// function makePoster() {
-//   event.preventDefault();
-//   picture.src = inputImage.value;
-//   title.innerText = inputTitle.value;
-//   quote.innerText = inputQuote.value;
-//   returnHome();
-// images.push(inputImage.value);
-// titles.push(inputTitle.value);
-// quotes.push(inputQuote.value);
-// return new Poster();
-// }
+function showSavedGrid() {
+  for (var i = 0; i < savedPosters.length; i++) {
+    document.querySelector(".saved-posters-grid").innerHTML = `<ul>
+        saved-posters-grid
+        <li>${savedPosters[i]}</li>
+      </ul>`;
+  }
+}
 
 // (we've provided one for you to get you started)!
 function getRandomIndex(array) {
