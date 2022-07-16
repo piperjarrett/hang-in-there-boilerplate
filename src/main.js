@@ -114,7 +114,7 @@ var quotes = [
   "A champion is defined not by their wins but by how they can recover when they fall.",
 ];
 var savedPosters = [];
-var currentPoster = new Poster();
+currentPoster = new Poster(picture.src, title.innerText, quote.innerText);
 // console.log(button);
 // event listeners go here 👇
 
@@ -135,7 +135,10 @@ function displayPoster() {
   picture.src = images[getRandomIndex(images)];
   title.innerText = titles[getRandomIndex(titles)];
   quote.innerText = quotes[getRandomIndex(quotes)];
+  currentPoster = new Poster(picture.src, title.innerText, quote.innerText);
+  console.log(currentPoster);
 }
+
 function displayForm() {
   mainPage.classList.add("hidden");
   formPage.classList.remove("hidden");
@@ -147,33 +150,40 @@ function displaySaved() {
 function returnHome() {
   mainPage.classList.remove("hidden");
   formPage.classList.add("hidden");
+  savedPage.classList.add("hidden");
 }
 
 function makePoster() {
   event.preventDefault();
-  imageURL = picture.src;
-  title = title.innerText;
-  quote = quote.innerText;
+  picture.src = inputImage.value;
+  title.innerText = inputTitle.value;
+  quote.innerText = inputQuote.value;
   returnHome();
-  images.push(imageURL);
-  titles.push(title);
-  quotes.push(quote);
+  images.push(picture.src);
+  titles.push(title.innerText);
+  quotes.push(quote.innerText);
+  currentPoster = new Poster(picture.src, title.innerText, quote.innerText);
   console.log(currentPoster);
-  return currentPoster;
-}
-function savePoster() {
-  for (var i = 0; i < savedPosters.length; i++) {
-    if (currentPoster !== savedPosters[i]) savedPosters.push(currentPoster);
-    console.log(savedPosters);
-  }
 }
 
+function savePoster() {
+  //  for (var i = 0; i < savedPosters.length; i++) {
+  if (!savedPosters.includes(currentPoster)) {
+    savedPosters.push(currentPoster);
+  }
+  //  alert("Saved Your Poster");
+  //console.log(savedPosters);
+}
+// }
+var posterGrid = document.querySelector(".saved-posters-grid");
 function showSavedGrid() {
+  posterGrid.innerHTML = "";
   for (var i = 0; i < savedPosters.length; i++) {
-    document.querySelector(".saved-posters-grid").innerHTML = `<ul>
-        saved-posters-grid
-        <li>${savedPosters[i]}</li>
-      </ul>`;
+    posterGrid.innerHTML += `<article class="mini-poster">
+    <img class="mini-poster" src="${savedPosters[i].imageURL}" alt="nothin' to see here" />
+    <h2>${savedPosters[i].title}</h2>
+    <h4>${savedPosters[i].quote}</h4>
+    </article>`;
   }
 }
 
