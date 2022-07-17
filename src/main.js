@@ -15,6 +15,7 @@ var showPosterButton = document.querySelector(".make-poster");
 var inputImage = document.querySelector("#poster-image-url");
 var inputTitle = document.querySelector("#poster-title");
 var inputQuote = document.querySelector("#poster-quote");
+var posterGrid = document.querySelector(".saved-posters-grid");
 // we've provided you with some data to work with 👇
 var images = [
   "./assets/bees.jpg",
@@ -115,7 +116,6 @@ var quotes = [
 ];
 var savedPosters = [];
 currentPoster = new Poster(picture.src, title.innerText, quote.innerText);
-// console.log(button);
 // event listeners go here 👇
 
 window.addEventListener("load", displayPoster);
@@ -127,7 +127,7 @@ backToMain.addEventListener("click", returnHome);
 showPosterButton.addEventListener("click", makePoster);
 savePosterButton.addEventListener("click", savePoster);
 showSavedButton.addEventListener("click", showSavedGrid);
-// savePosterButton.addEventListener("click", //savePoster)
+savedPage.addEventListener("dblclick", deletePoster);
 
 // functions and event handlers go here 👇
 
@@ -136,7 +136,6 @@ function displayPoster() {
   title.innerText = titles[getRandomIndex(titles)];
   quote.innerText = quotes[getRandomIndex(quotes)];
   currentPoster = new Poster(picture.src, title.innerText, quote.innerText);
-  console.log(currentPoster);
 }
 
 function displayForm() {
@@ -163,27 +162,31 @@ function makePoster() {
   titles.push(title.innerText);
   quotes.push(quote.innerText);
   currentPoster = new Poster(picture.src, title.innerText, quote.innerText);
-  console.log(currentPoster);
 }
 
 function savePoster() {
-  //  for (var i = 0; i < savedPosters.length; i++) {
   if (!savedPosters.includes(currentPoster)) {
     savedPosters.push(currentPoster);
   }
-  //  alert("Saved Your Poster");
-  //console.log(savedPosters);
 }
-// }
-var posterGrid = document.querySelector(".saved-posters-grid");
+
 function showSavedGrid() {
   posterGrid.innerHTML = "";
   for (var i = 0; i < savedPosters.length; i++) {
-    posterGrid.innerHTML += `<article class="mini-poster">
-    <img class="mini-poster" src="${savedPosters[i].imageURL}" alt="nothin' to see here" />
+    posterGrid.innerHTML += `<article class="mini-poster" id = "${savedPosters[i].id}">
+    <img class="mini-poster" id = "${savedPosters[i].id}" src="${savedPosters[i].imageURL}" alt="nothin' to see here" />
     <h2>${savedPosters[i].title}</h2>
     <h4>${savedPosters[i].quote}</h4>
     </article>`;
+  }
+}
+
+function deletePoster(event) {
+  for (var i = 0; i < savedPosters.length; i++) {
+    if (savedPosters[i].id === parseInt(event.target.id)) {
+      savedPosters.splice(i, 1);
+      showSavedGrid();
+    }
   }
 }
 
